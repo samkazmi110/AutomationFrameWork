@@ -27,3 +27,7 @@ Check that the selected item is added to your cart with the correct price.
 ## Unhandled Exception
 * 1 capcha verification if appear. verify manually and re-run case
 
+## TO DO
+* if i get time, i need to introduce config file to read variables instead of hardcoded values
+* some more refactoring
+  
