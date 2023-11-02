@@ -5,6 +5,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +70,31 @@ namespace AutomationFrameWork.Helpers
         public void CloseTest()
         {
             driver.Quit();
+        }
+
+        public void SwitchToPopupWindow(string existingWindowHandle)
+        {
+            string popupHandle = string.Empty;
+
+            ReadOnlyCollection<string> windowHandles = driver.WindowHandles;
+
+            foreach (string handle in windowHandles)
+            {
+                if (handle != existingWindowHandle)
+                {
+                    popupHandle = handle;
+                    break;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(popupHandle))
+            {
+                driver.SwitchTo().Window(popupHandle);
+            }
+            else
+            {
+                throw new Exception("Popup window not found");
+            }
         }
     }
 }

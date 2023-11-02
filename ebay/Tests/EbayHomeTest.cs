@@ -1,9 +1,11 @@
-﻿using AutomationFrameWork.Helpers;
+﻿using AutomationFrameWork.Actions;
+using AutomationFrameWork.Helpers;
 using ebay.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
@@ -25,14 +27,16 @@ namespace ebay.Tests
             //add page Load
             bool found = false;
             IWebElement result = null;
-            foreach (var v in ehome.SearchResults)
+            string TitleFound = string.Empty;
+            foreach (var item in ehome.SearchResults)
             {
-                if (!string.IsNullOrEmpty(v.Text))
+                if (!string.IsNullOrEmpty(item.Text))
                 { 
-                    if(ContainsAllWords(v.Text, searchKeyWord))
+                    if(ContainsAllWords(item.Text, searchKeyWord))
                     {
                         found = true;
-                        result = v;
+                        result = item;
+                        TitleFound = item.Text;
                         break; 
                     }
                 }
@@ -46,6 +50,33 @@ namespace ebay.Tests
             else
             {
                 result.Click();
+                SwitchToPopupWindow(driver.CurrentWindowHandle);
+                Assert.IsTrue(ContainsAllWords(driver.Title , TitleFound));
+
+                AdvertisementPage adpage = new AdvertisementPage();
+                //select the color if available
+                SeleniumAction.SelectElementFromDropDown(adpage.ColorDropDown(), "Gold");
+
+                //select the Quantity
+                SeleniumAction.ClearAndSendKeys(adpage.QuantityTxtBox,"1");
+
+
+                string Price = adpage.PriceLabel.Text.Replace(",","");
+
+                Price = Price.Replace("US $", "");
+                //add to cart
+                adpage.AddtoCart.Click();
+
+                adpage.GoToCartBtn.Click();
+
+                ShoppingCart shpCart = new ShoppingCart();
+                
+                Assert.IsTrue(shpCart.QuantityDropDownCart.Text == "1");
+                Assert.IsTrue(shpCart.PriceLabelCart == Price);
+                Assert.IsTrue(shpCart.PriceLabelBeforeShipping == Price);
+                Assert.IsTrue(shpCart.PriceLabelAfterShipping == Price);
+
+
             }
         }
 
@@ -62,5 +93,7 @@ namespace ebay.Tests
             }
             return true;
         }
+
+        
     }
 }
