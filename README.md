@@ -17,6 +17,13 @@ Select ‘Color’ and ‘Quantity’
 Click the ‘Add to cart’ button
 
 
-Check that the selected item is added to your cart with the correct price
-.
+Check that the selected item is added to your cart with the correct price.
+
+## Exception Handled
+
+* 1. Checkout as guest popup appears sometime
+* 2. Login page appears sometimes
+ 
+## Unhandled Exception
+* 1 capcha verification if appear. verify manually and re-run case
 
