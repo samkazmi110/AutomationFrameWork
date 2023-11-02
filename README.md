@@ -23,6 +23,7 @@ Check that the selected item is added to your cart with the correct price.
 
 * 1. Checkout as guest popup appears sometime
 * 2. Login page appears sometimes
+  3. Removed "chrome is controlled by automation software banner" which will cause less captcha verificaiton
  
 ## Unhandled Exception
 * 1 capcha verification if appear. verify manually and re-run case
