@@ -10,6 +10,7 @@ namespace ebay.Pages
         private string _xpathPriceLabel;
         private string _xpathAddtoCartBtn;
         private string _xpathGoToCartButton;
+        private string _xpathCheckOutAsGuestBtn;
 
         public IWebElement AddtoCart => driver.FindElement(By.XPath(_xpathAddtoCartBtn));
         public IWebElement QuantityTxtBox => driver.FindElement(By.XPath(_xpathQuantityTxtBox));
@@ -32,13 +33,39 @@ namespace ebay.Pages
             }
         }
 
+        /// <summary>
+        /// some times checkout as guest btn appears
+        /// </summary>
+        /// <returns></returns>
+        public void CheckOutAsGuestORLoginPageBtn()
+        {
+            try
+            {
+                driver.FindElement(By.XPath(_xpathCheckOutAsGuestBtn)).Click();
+            }
+            catch
+            {
+                //if Login page do nothing
+            }
+            finally
+            {
+                WaitForPageLoad();
+                //press back
+                driver.Navigate().Back();
+                WaitForPageLoad();
+               
+            }
+        }
+
         public AdvertisementPage() 
         {
             _xpathColorSelectionDropDown = "//select[@id='x-msku__select-box-1000']";
             _xpathQuantityTxtBox = "//input[@id='qtyTextBox']";
             _xpathPriceLabel = "//div[@data-testid='x-price-primary']/span";
-            _xpathAddtoCartBtn = "//a[@data-testid='ux-call-to-action']";
+            _xpathAddtoCartBtn = "//a[@data-testid='ux-call-to-action']//span[text()='Add to cart']";
             _xpathGoToCartButton = "//div[@class='ux-overlay__content']//span[text()='Go to cart']";
+            _xpathCheckOutAsGuestBtn = "//a[@data-testid'ux-call-to-action']";
+
 
         }
     }

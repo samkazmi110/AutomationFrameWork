@@ -49,9 +49,10 @@ namespace AutomationFrameWork.Actions
                 TextboxElement.SendKeys(value);
             }
         }
-        public string SelectedOptionDropDown()
+        public static string SelectedOptionDropDown(IWebElement dropdown)
         {
-            return string.Empty;
+            SelectElement element = new SelectElement(dropdown);
+            return element.SelectedOption.Text;
         }
     }
 }

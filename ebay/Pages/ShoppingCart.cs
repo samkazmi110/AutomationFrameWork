@@ -16,16 +16,16 @@ namespace ebay.Pages
         private string _xpathPriceLabelAfterShipping;
 
         public IWebElement QuantityDropDownCart => driver.FindElement(By.XPath(_xpathQuantityDropDown));
-        public string PriceLabelCart => driver.FindElement(By.XPath(_xpathPriceLabelCart)).Text;
-        public string PriceLabelBeforeShipping => driver.FindElement(By.XPath(_xpathPriceLabelBeforeShipping)).Text;
-        public string PriceLabelAfterShipping => driver.FindElement(By.XPath(_xpathPriceLabelAfterShipping)).Text;
+        public IWebElement PriceLabelCart => driver.FindElement(By.XPath(_xpathPriceLabelCart));
+        public IWebElement PriceLabelBeforeShipping => driver.FindElement(By.XPath(_xpathPriceLabelBeforeShipping));
+        public IWebElement PriceLabelAfterShipping => driver.FindElement(By.XPath(_xpathPriceLabelAfterShipping));
 
         public ShoppingCart() 
         {
             _xpathQuantityDropDown = "//select[@data-test-id='qty-dropdown']";
-            _xpathPriceLabelCart = "//div[@class='item-price font-title-3']//span/text()";
-                _xpathPriceLabelBeforeShipping = "//div[@data-test-id='ITEM_TOTAL']//span/text()";
-                _xpathPriceLabelAfterShipping = "//div[@data-test-id='SUBTOTAL']//span/text()";
+            _xpathPriceLabelCart = "//div[@class='item-price font-title-3']//span/span";
+                _xpathPriceLabelBeforeShipping = "//div[@data-test-id='ITEM_TOTAL']//span/span";
+                _xpathPriceLabelAfterShipping = "//div[@data-test-id='SUBTOTAL']//span/span";
 
         }
     }

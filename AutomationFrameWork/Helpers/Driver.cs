@@ -3,6 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -96,5 +97,24 @@ namespace AutomationFrameWork.Helpers
                 throw new Exception("Popup window not found");
             }
         }
+
+        public void WaitForPageLoad()
+        {
+
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+
+            try {
+                // Wait for document.readyState to be 'complete'
+                wait.Until(d => ((IJavaScriptExecutor)d).ExecuteScript("return document.readyState").Equals("complete"));
+
+                // Optional: Add a wait for document load event
+                wait.Until(d => ((IJavaScriptExecutor)d).ExecuteScript("return document.readyState").Equals("interactive"));
+            }
+            catch
+            {
+
+            }
+            }
     }
 }
+

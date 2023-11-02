@@ -67,14 +67,23 @@ namespace ebay.Tests
                 //add to cart
                 adpage.AddtoCart.Click();
 
+                WaitForPageLoad();
+
+                //Unexpected page handle here
+                // checkout as guest?
+                //or is sign in then press back and click on cart again
+               //    adpage.CheckOutAsGuestORLoginPageBtn();
+                //   adpage.AddtoCart.Click();
+                //   WaitForPageLoad();
+
                 adpage.GoToCartBtn.Click();
 
                 ShoppingCart shpCart = new ShoppingCart();
                 
-                Assert.IsTrue(shpCart.QuantityDropDownCart.Text == "1");
-                Assert.IsTrue(shpCart.PriceLabelCart == Price);
-                Assert.IsTrue(shpCart.PriceLabelBeforeShipping == Price);
-                Assert.IsTrue(shpCart.PriceLabelAfterShipping == Price);
+                Assert.IsTrue(SeleniumAction.SelectedOptionDropDown(shpCart.QuantityDropDownCart) == "1");
+                Assert.IsTrue(shpCart.PriceLabelCart.Text == Price);
+                Assert.IsTrue(shpCart.PriceLabelBeforeShipping.Text == Price);
+                Assert.IsTrue(shpCart.PriceLabelAfterShipping.Text == Price);
 
 
             }
