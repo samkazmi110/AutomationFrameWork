@@ -16,6 +16,7 @@ namespace AutomationFrameWork.Helpers
     public class Driver
     {
         public static IWebDriver driver { get; set; }
+
         public IWebDriver GetWebDriver (BrowserModel browser) {
             switch (Enum.Parse(typeof(BrowserType), browser.BrowserName))
             {
@@ -60,18 +61,7 @@ namespace AutomationFrameWork.Helpers
         }
 
 
-        [SetUp]
-        public void InitializeTest()
-        {
-            driver = GetWebDriver(new BrowserModel("Chrome", excludeAutomation: true, incognitoMode: true, startMaximize: true));
-
-        }
-
-        [TearDown]
-        public void CloseTest()
-        {
-            driver.Quit();
-        }
+      
 
         public void SwitchToPopupWindow(string existingWindowHandle)
         {
@@ -114,7 +104,8 @@ namespace AutomationFrameWork.Helpers
             {
 
             }
-            }
+         }
+
     }
 }
 

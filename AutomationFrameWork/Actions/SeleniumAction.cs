@@ -31,12 +31,14 @@ namespace AutomationFrameWork.Actions
                             break;
                         }
                     }
-                    if (!enabled)
-                        Assert.Fail($"value {value} is disabled in dropdown");
+                }
+                
+                if (!enabled)
+                    Assert.Fail($"value {value} is disabled in dropdown");
 
                     SelectElement element = new SelectElement(dropdown);
                     element.SelectByText(value);
-                }
+                
 
             }
         }

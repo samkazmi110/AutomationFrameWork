@@ -13,21 +13,24 @@ using System.Threading.Tasks;
 
 namespace ebay.Tests
 {
-    public class EbayHomeTest : Driver
+    public class EbayHomeTest : TestSetup
     {
 
         [Test]
         public void SearchandAddItemToCart()
         {
-            string searchKeyWord = "iphone 14 pro max 128gb";
-            EbayHome ehome = new EbayHome();
-            driver.Navigate().GoToUrl("https://www.ebay.com");
-            ehome.SearchTxtBox.SendKeys(searchKeyWord);
-            ehome.SearchSubmitBtn.Click();
-            //add page Load
+
             bool found = false;
             IWebElement result = null;
             string TitleFound = string.Empty;
+
+
+            EbayHome ehome = new EbayHome();
+            driver.Navigate().GoToUrl(URL);
+            ehome.SearchTxtBox.SendKeys(searchKeyWord);
+            ehome.SearchSubmitBtn.Click();
+           
+            
             foreach (var item in ehome.SearchResults)
             {
                 if (!string.IsNullOrEmpty(item.Text))
@@ -55,10 +58,10 @@ namespace ebay.Tests
 
                 AdvertisementPage adpage = new AdvertisementPage();
                 //select the color if available
-                SeleniumAction.SelectElementFromDropDown(adpage.ColorDropDown(), "Gold");
+                SeleniumAction.SelectElementFromDropDown(adpage.ColorDropDown(), color);
 
                 //select the Quantity
-                SeleniumAction.ClearAndSendKeys(adpage.QuantityTxtBox,"1");
+                SeleniumAction.ClearAndSendKeys(adpage.QuantityTxtBox,quantity);
 
 
                 string Price = adpage.PriceLabel.Text.Replace(",","");
@@ -66,21 +69,13 @@ namespace ebay.Tests
                 Price = Price.Replace("US $", "");
                 //add to cart
                 adpage.AddtoCart.Click();
-
                 WaitForPageLoad();
-
-                //Unexpected page handle here
-                // checkout as guest?
-                //or is sign in then press back and click on cart again
-               //    adpage.CheckOutAsGuestORLoginPageBtn();
-                //   adpage.AddtoCart.Click();
-                //   WaitForPageLoad();
 
                 adpage.GoToCartBtn.Click();
 
                 ShoppingCart shpCart = new ShoppingCart();
                 
-                Assert.IsTrue(SeleniumAction.SelectedOptionDropDown(shpCart.QuantityDropDownCart) == "1");
+                Assert.IsTrue(SeleniumAction.SelectedOptionDropDown(shpCart.QuantityDropDownCart) == quantity);
                 Assert.IsTrue(shpCart.PriceLabelCart.Text.Replace("$","") == Price, $"Price mismatch on cart expected:{Price} actual: {shpCart.PriceLabelCart.Text.Replace("$", "")}");
                 Assert.IsTrue(shpCart.PriceLabelBeforeShipping.Text.Replace("$", "") == Price, $"Price mismatch on cart expected:{Price} actual: {shpCart.PriceLabelBeforeShipping.Text.Replace("$", "")}");
                 Assert.IsTrue(shpCart.PriceLabelAfterShipping.Text.Replace("$", "") == Price, $"Price mismatch on cart expected:{Price} actual: {shpCart.PriceLabelAfterShipping.Text.Replace("$", "")}");
