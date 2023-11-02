@@ -17,6 +17,18 @@ Select ‘Color’ and ‘Quantity’
 Click the ‘Add to cart’ button
 
 
-Check that the selected item is added to your cart with the correct price
-.
+Check that the selected item is added to your cart with the correct price.
 
+## Exception Handled
+
+* 1. Checkout as guest popup appears sometime
+* 2. Login page appears sometimes
+  3. Removed "chrome is controlled by automation software banner" which will cause less captcha verificaiton
+ 
+## Unhandled Exception
+* 1 capcha verification if appear. verify manually and re-run case
+
+## TO DO
+* if i get time, i need to introduce config file to read variables instead of hardcoded values
+* some more refactoring
+  
